@@ -1,0 +1,24 @@
+{% extends "SentimentAnalysis.html" %}
+
+{% block body %}
+<p class='text-center'> <strong>Sentence entered </strong>{{txt}} </p>
+<table class="table">
+ 	<thead>
+      <tr>
+      	<th> Algorithm </th>
+        <th>Polarity</th>
+        <th>Subjectivity</th>
+
+        
+      </tr>
+    </thead>
+    {% for alg,value in posts.items() %}
+    <tr>
+    <td>{{alg}}  </td> 
+    <td> {{value[0]}}</td>
+    <td> {{value[1]}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}
