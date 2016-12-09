@@ -37,7 +37,21 @@ def SentimentAnalysis():
 @app.route('/SentimentAnalysis2',methods=['post','get'])
 def s1():
 	return render_template("SentimentProcessed.html")
-@app.route("/fileAnalysis")
+
+@app.route("/fileAnalysis",methods=['post','get'])
 def fileAnalysis():
+	if request.method=="POST":
+		option = request.form['graphSelection']
+		fName = request.form['fileUpload']
+		print(option,fName)
+		print("posted file ")
 	return render_template("fileAnalysis.html")
+@app.route("/fileSentiment",methods=['post','get'])
+def fileSentiment():
+	if request.method=="POST":
+		option = request.form['graphSelection']
+		fName = request.form['fileUpload']
+		print(option,fName)
+		print("posted file ")
+	return render_template("fileSentiment.html")
 	  
