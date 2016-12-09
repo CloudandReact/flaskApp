@@ -44,9 +44,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="home">Home</a></li>
-            <li><a href="SentimentAnalysis">Sentiment Analysis</a></li>
-            <li><a href="#contact">File Info</a></li>
+            <li {% if "home" in request.path  %}class="active"{% endif %}> <a href="home">Home</a></li>
+            <li {% if "SentimentAnalysis " in request.path == 'SentimentAnalysis' %}class="active"{% endif %}> <a href="SentimentAnalysis">Sentiment Analysis</a></li>
+            <li {% if "FileAnalysis" in request.path == 'FileInfo' %} class="FileInfo"{% endif %}> <a href="fileAnalysis">File Analysis</a></li>
              <li><a href="#contact">Create Own Classifier</a></li>
              <li><a href="#contact">Graph Results</a></li>
 

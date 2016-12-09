@@ -37,4 +37,7 @@ def SentimentAnalysis():
 @app.route('/SentimentAnalysis2',methods=['post','get'])
 def s1():
 	return render_template("SentimentProcessed.html")
+@app.route("/fileAnalysis")
+def fileAnalysis():
+	return render_template("fileAnalysis.html")
 	  
