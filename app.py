@@ -1,7 +1,9 @@
-from flask import Flask, render_template,request,url_for
+from flask import Flask, render_template,request,url_for,send_from_directory
 from textblob import TextBlob
 from textblob.sentiments import NaiveBayesAnalyzer
 from textblob import Blobber
+import os
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -41,17 +43,45 @@ def s1():
 @app.route("/fileAnalysis",methods=['post','get'])
 def fileAnalysis():
 	if request.method=="POST":
+		f =request.files['fileUpload']
+		if not f:
+			print("not file entered")
+		else:
+			file_contents = f.stream.read().decode("latin-1")
+			print("before writing to the file")
+			newFile= open("statsFile.csv","w+",encoding='latin-1')
+			newFile.write(file_contents)
+			newFile.close()
+			print("wrote to file ")
+			print(type(file_contents))
 		option = request.form['graphSelection']
-		fName = request.form['fileUpload']
-		print(option,fName)
+		
+		print(option)
 		print("posted file ")
 	return render_template("fileAnalysis.html")
 @app.route("/fileSentiment",methods=['post','get'])
 def fileSentiment():
 	if request.method=="POST":
+		print("made a post request yeah")
 		option = request.form['graphSelection']
-		fName = request.form['fileUpload']
-		print(option,fName)
+		#fName = request.form['fileUpload']
+		print("made it this far before f")
+		f =request.files['fileUpload']
+		if not f:
+			print("not file entered")
+		else:
+			print("decoding the file ")
+			file_contents = f.stream.read().decode("latin-1")
+			print("before writing to the file")
+			newFile= open("newFile.csv","w+",encoding='latin-1')
+			newFile.write(file_contents)
+			newFile.close()
+			print("wrote to file ")
+			print(type(file_contents))
+		print(option,f)
 		print("posted file ")
+		print(os.getcwd())
+		return send_from_directory(os.getcwd(), "newFile.csv",as_attachment=True)
 	return render_template("fileSentiment.html")
+
 	  

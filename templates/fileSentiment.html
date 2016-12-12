@@ -1,7 +1,7 @@
 {% extends "BasicNavBar.html" %}
 {% block body %}
 <h2 class="text-center"> Get statistics on file of comments </h2>
-<form action="" method="post"  >
+<form action="" method="post"  enctype='multipart/form-data'>
 			<div class="form-group">
 			<label for="selectGraph">Select Level of Sentiment as being more or less polar </label>
 			<select  class="form-control" id="selectGraph" name="graphSelection" value={{"request.form.graphSelection"}}>
