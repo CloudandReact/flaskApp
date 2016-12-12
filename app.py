@@ -5,6 +5,7 @@ from textblob import Blobber
 import os
 import sentimeAnalysis
 import groupByHour
+import topComments
 import pandas as pd
 
 app = Flask(__name__)
@@ -48,9 +49,10 @@ def fileAnalysis():
 	if request.method=="POST":
 		option = request.form['graphSelection']
 		f =request.files['fileUpload']
+		
 		if not f:
 			print("not file entered")
-		else:
+		elif option!="Average likes for top commentators":
 			file_contents = f.stream.read().decode("latin-1")
 			print("before writing to the file")
 			newFile= open("statsFile.csv","w+",encoding='latin-1')
@@ -63,12 +65,29 @@ def fileAnalysis():
 				groupByHour.saveHourGraph("statsFile.csv")
 				return render_template("graph.html",figName="commentsByHour.png",title="Comments per hour of the day")
 			elif option=="Top Commentators":
-				pass
+				topComments.makeTopCommentsGraph("statsFile.csv")
+				return render_template("graph.html",figName="topComments.png",title="top 100 commentators and the number of comments over a period of time")
 			elif option=="General Statistics":
 				dfComments = pd.read_csv("statsFile.csv", parse_dates=['comment_published'],encoding="latin-1")
 				print("hello world statistics")
-				return render_template("generalStats.html",dFrame=dfComments.describe(include='all').to_html(classes="table table-striped"),title="General statistics on the file")
-		
+				return render_template("generalStats.html",dFrame=dfComments.describe(percentiles=[0.25,0.5,0.75,0.85,0.9,0.95,0.97,0.98,0.99]).to_html(classes="table table-striped"),title="General statistics on the file including mean ,standard deviation and percentiles of count of comment")
+		elif option=="Average likes for top commentators":
+			print("in average likes for top commentators need 2 files")
+			postsFile = request.files['fileUploadLikes']
+			if not f or not postsFile:
+				print("need to enter both files")
+			else:
+				file_contents = f.stream.read().decode("latin-1")
+				filePostsContents= postsFile.stream.read().decode("latin-1")
+				print("before writing to the file")
+				newFile= open("statsFile.csv","w+",encoding='latin-1')
+				newFile.write(file_contents)
+				newFile.close()
+				newFile= open("commentsFile.csv","w+",encoding='latin-1')
+				newFile.write(filePostsContents)
+				newFile.close()
+				print("wrote to both files")
+
 		
 		print(option)
 		print("posted file ")

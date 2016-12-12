@@ -9,13 +9,16 @@
   			<option  >Top Commentators</option>
   			<option>Comments by hour of the day</option>
   			<option>General Statistics</option>
- 			 <option>All</option>
- 			 <option>5</option>
-			</select>
+ 			 <option>Average likes for top commentators</option>
+ 			</select>
 			</div>
 			<div class="form-group">
-			<label for="selectFile">Select File</label>
+			<label for="selectFile">Select Comments File</label>
 			<input class="form-control" type="file" id="selectFile" name="fileUpload" value={{"request.form.fileUpload"}}>
+			</div>
+			<div class="form-group">
+			<label for="selectFile">Select Posts File only for average likes</label>
+			<input class="form-control" type="file" id="selectFile" name="fileUploadLikes" value={{"request.form.fileUploadLikes"}}>
 			</div>
 			 <button type="submit" class="btn btn-default">Submit</button>
 			</form>
