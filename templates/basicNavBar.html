@@ -47,7 +47,7 @@
             <li {% if "home" in request.path  %}class="active"{% endif %}> <a href="home">Home</a></li>
             <li {% if "SentimentAnalysis " in request.path  %}class="active"{% endif %}> <a href="SentimentAnalysis">Sentiment Analysis</a></li>
             <li {% if "fileAnalysis" in request.path  %} class="active"{% endif %}> <a href="fileAnalysis">File Analysis</a></li>
-             <li><a href="#contact">Create Own Classifier</a></li>
+             <li {% if "createClassifier" in request.path  %} class="active"{% endif %}><a href="createClassifier">Create Classifier</a></li>
              <li {% if "fileSentiment" in request.path  %} class="active"{% endif %}><a href="fileSentiment">File Sentiment</a></li>
 
           </ul>
