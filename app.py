@@ -4,6 +4,8 @@ from textblob.sentiments import NaiveBayesAnalyzer
 from textblob import Blobber
 import os
 import sentimeAnalysis
+import groupByHour
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -44,6 +46,7 @@ def s1():
 @app.route("/fileAnalysis",methods=['post','get'])
 def fileAnalysis():
 	if request.method=="POST":
+		option = request.form['graphSelection']
 		f =request.files['fileUpload']
 		if not f:
 			print("not file entered")
@@ -55,7 +58,17 @@ def fileAnalysis():
 			newFile.close()
 			print("wrote to file ")
 			print(type(file_contents))
-		option = request.form['graphSelection']
+			if option=="Comments by hour of the day":
+				print("in top comments of hour of the day")
+				groupByHour.saveHourGraph("statsFile.csv")
+				return render_template("graph.html",figName="commentsByHour.png",title="Comments per hour of the day")
+			elif option=="Top Commentators":
+				pass
+			elif option=="General Statistics":
+				dfComments = pd.read_csv("statsFile.csv", parse_dates=['comment_published'],encoding="latin-1")
+				print("hello world statistics")
+				return render_template("generalStats.html",dFrame=dfComments.describe(include='all').to_html(classes="table table-striped"),title="General statistics on the file")
+		
 		
 		print(option)
 		print("posted file ")
