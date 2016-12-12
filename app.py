@@ -20,7 +20,28 @@ def homeP():
 	return render_template("home.html")
 blobBaiyes =Blobber(analyzer=NaiveBayesAnalyzer())
 blobPattern = Blobber()
+@app.route('/createClassifier',methods=['post','get'])
+def createClassifer():
+	if (request.method=='POST'):
+		print("post method createClassifier")
+		f =request.files['fileUpload']
+		negFile = request.files['fileUploadNegative']
+		if not f and not negFile:
+			print("not file entered")
+		else:
+			file_contentsPos = f.stream.read().decode("latin-1")
+			file_contentsNeg= negFile.stream.read().decode("latin-1")
+			print("before writing to the file")
+			newFile= open("trainingSetPos.txt","w+",encoding='utf-8')
+			newFile.write(file_contentsPos)
+			newFile.close()
+			newFile= open("trainingSetNeg.txt","w+",encoding='utf-8')
+			newFile.write(file_contentsNeg)
+			newFile.close()
+		
 
+
+	return render_template("createClassifier.html")
 @app.route('/SentimentAnalysis',methods=['post','get'])
 def SentimentAnalysis():
 	if(request.method=='POST'):

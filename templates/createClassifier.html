@@ -1,0 +1,20 @@
+{% extends "BasicNavBar.html" %}
+
+{% block body %}
+<h2 class="text-center"> Create a naive bayes classifier please upload the training sets</h2>
+<form action="" method="post"  enctype='multipart/form-data'>
+			
+			<div class="form-group">
+			<label for="selectFile">Upload training set positive data </label>
+			<input class="form-control" type="file" id="selectFile" name="fileUpload" value={{"request.form.fileUpload"}}>
+			</div>
+			<div class="form-group">
+			<label for="selectFile">Upload training set negative data </label>
+			<input class="form-control" type="file" id="selectFile" name="fileUploadNegative" value={{"request.form.fileUploadNegative"}}>
+			</div>
+			
+			
+			 <button type="submit" class="btn btn-default">Submit</button>
+			</form>
+		</div>
+{% endblock %}
