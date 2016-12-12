@@ -38,6 +38,7 @@ def parseFile(fName,levelSentiment):
     dfComments['comment_subjectivity'] = commentSubjectivity
     dfComments['comment_pos'] = commentPos
     dfComments['comment_neg'] = commentNeg
+    print("finished analyzing all comments now filtering and saving comments based on level of sentiment")
     #dfPros = dfComments[dfComments['comment_polarity'] > 0.8]
     #dfPros = dfPros[dfPros['comment_pos'] >0.65]
     #(dfComments['comment_subjectivity'] > 0.6)
@@ -61,9 +62,9 @@ def parseFile(fName,levelSentiment):
     elif levelSentiment== "Somewhat Positive":
         dfPros= dfComments[dfComments['comment_polarity']>0.45]
         dfPros= dfPros[dfPros['comment_pos']>0.63]
-        uprint(dfCons.to_string())
+        uprint(dfPros.to_string())
         dfPros.to_csv("somewhatPros.csv",index=False,encoding="latin-1")
-    elif levelSentiment=="Very positive":
+    elif levelSentiment=="Very Positive":
         dfPros= dfComments[dfComments['comment_polarity']>0.7]
         dfPros= dfPros[dfPros['comment_pos']>0.75]
         uprint(dfPros.to_string())
