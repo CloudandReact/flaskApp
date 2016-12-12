@@ -3,6 +3,7 @@ from textblob import TextBlob
 from textblob.sentiments import NaiveBayesAnalyzer
 from textblob import Blobber
 import os
+import sentimeAnalysis
 
 app = Flask(__name__)
 
@@ -61,7 +62,9 @@ def fileAnalysis():
 	return render_template("fileAnalysis.html")
 @app.route("/fileSentiment",methods=['post','get'])
 def fileSentiment():
+
 	if request.method=="POST":
+		dictFileMapping={"Somewhat Negative":"somewhatCons.csv","Very Negative":"veryCons.csv", "Somewhat Positive":"somewhatPros.csv","Very Positive":"veryPros.csv"}
 		print("made a post request yeah")
 		option = request.form['graphSelection']
 		#fName = request.form['fileUpload']
@@ -81,7 +84,9 @@ def fileSentiment():
 		print(option,f)
 		print("posted file ")
 		print(os.getcwd())
-		return send_from_directory(os.getcwd(), "newFile.csv",as_attachment=True)
+		sentimeAnalysis.parseFile("newFile.csv",option)
+		#fName = 
+		return send_from_directory(os.getcwd(), dictFileMapping[option],as_attachment=True)
 	return render_template("fileSentiment.html")
 
 	  
