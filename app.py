@@ -6,6 +6,7 @@ import os
 import sentimeAnalysis
 import groupByHour
 import topComments
+import averageComments
 import pandas as pd
 
 app = Flask(__name__)
@@ -17,6 +18,8 @@ def homepage():
 @app.route('/home')
 def homeP():
 	return render_template("home.html")
+blobBaiyes =Blobber(analyzer=NaiveBayesAnalyzer())
+blobPattern = Blobber()
 
 @app.route('/SentimentAnalysis',methods=['post','get'])
 def SentimentAnalysis():
@@ -24,8 +27,8 @@ def SentimentAnalysis():
 		txtQuery= request.form['textQuery']
 		print("requested a post ",txtQuery)
 		if txtQuery!="":
-			textblobBaiyes = TextBlob(txtQuery,analyzer=NaiveBayesAnalyzer())
-			textblobPattern = TextBlob(txtQuery)
+			textblobBaiyes = blobBaiyes(txtQuery)
+			textblobPattern = blobPattern(txtQuery)
 			sentiments ={}
 			sentiments["textblobBaiyes 0 neg 1 pos"] = [textblobBaiyes.sentiment.p_pos,'-']
 			sentiments['textbloPattern -1 to 1'] = [textblobPattern.sentiment.polarity,textblobPattern.subjectivity]
@@ -83,10 +86,13 @@ def fileAnalysis():
 				newFile= open("statsFile.csv","w+",encoding='latin-1')
 				newFile.write(file_contents)
 				newFile.close()
-				newFile= open("commentsFile.csv","w+",encoding='latin-1')
+				newFile= open("postsFile.csv","w+",encoding='latin-1')
 				newFile.write(filePostsContents)
 				newFile.close()
+
 				print("wrote to both files")
+				averageComments.getAverageLikes("statsFile.csv","postsFile.csv")
+				return render_template("graph.html",figName="averageComments.png",title="Average Comments for top 500 users")
 
 		
 		print(option)
