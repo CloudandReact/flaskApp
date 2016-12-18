@@ -28,7 +28,7 @@ def makeTopCommentsGraph(fName):
     gRange = list(range(0, len(dfJustComments.index)))
     print(gRange)
     print("printing comment count")
-    print(dfJustComments.index)
+    uprint(dfJustComments.index)
     print(type(dfJustComments))
     plt.scatter(gRange,dfJustComments['count'],color='red')
     plt.title("Users who comment the most and their number of comments\n")

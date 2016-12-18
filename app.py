@@ -107,13 +107,13 @@ def fileAnalysis():
 				newFile= open("statsFile.csv","w+",encoding='latin-1')
 				newFile.write(file_contents)
 				newFile.close()
-				newFile= open("postsFile.csv","w+",encoding='latin-1')
+				newFile= open("postsFile.csv","w+",encoding='utf-8')
 				newFile.write(filePostsContents)
 				newFile.close()
 
 				print("wrote to both files")
 				averageComments.getAverageLikes("statsFile.csv","postsFile.csv")
-				return render_template("graph.html",figName="averageComments.png",title="Average Comments for top 500 users")
+				return render_template("graph.html",figName="aComments.png",title="Average Comments for top 500 users")
 
 		
 		print(option)

@@ -24,7 +24,7 @@ def getAverageLikes(fComments,fPosts):
     dfComments = pd.read_csv(fComments,encoding="latin-1")
     #print(dfComments['comment_published'])
     print("df comments length", len(dfComments.index))
-    dfStatus = pd.read_csv(fPosts,encoding="latin-1")
+    dfStatus = pd.read_csv(fPosts,encoding="UTF-8")
     print(dfStatus['status_published'])
     print("df status length", len(dfStatus.index))
     dfMerged = pd.merge(dfComments, dfStatus, on='status_id')
@@ -68,10 +68,10 @@ def getAverageLikes(fComments,fPosts):
     rangeComments = range(0,len(listAverage))
     plt.scatter(rangeComments,listAverage,s=2,color="green")
     plt.xlabel("top commententators from most to least comments")
-    plt.ylabel("number of likes per comment (average")
+    plt.ylabel("number of likes per comment (average)")
     plt.title("Top commentators  vs average likes per comment\n")
     plt.ylim(ymin=0)
     plt.xlim((0,500))
-    plt.savefig("static\\averageComments.png")
+    plt.savefig("static\\aComments.png")
    
     
