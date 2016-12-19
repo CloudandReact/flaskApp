@@ -73,11 +73,14 @@ def SentimentAnalysis():
 def s1():
 	return render_template("SentimentProcessed.html")
 
+
 @app.route("/fileAnalysis",methods=['post','get'])
 def fileAnalysis():
 	if request.method=="POST":
 		option = request.form['graphSelection']
 		f =request.files['fileUpload']
+		fName = request.files['fileUpload'].filename
+		fName = fName[:fName.find("_")]
 		currentDir = os.getcwd()
 		
 		if not f:
@@ -118,13 +121,21 @@ def fileAnalysis():
 				newFile.close()
 
 				print("wrote to both files")
-				averageComments.getAverageLikes("statsFile.csv","postsFile.csv")
+
+				averageComments.getAverageLikes("statsFile.csv","postsFile.csv",fName)
+
 				return render_template("graph.html",figName=("averageComments.png"),title="Average Comments for top 500 users")
+				#return render_template("")
 
 		
 		print(option)
 		print("posted file ")
 	return render_template("fileAnalysis.html")
+@app.route("/static/<figName>",methods=['post','get'])
+def renderFigure(figName):
+	fileLocation = os.getcwd()+"\\static\\"
+	print("rendering image",figName)
+	return send_from_directory(fileLocation, figName)
 @app.route("/fileSentiment",methods=['post','get'])
 def fileSentiment():
 

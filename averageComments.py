@@ -20,7 +20,7 @@ def getTopLikes(topLikes):
     for i in topLikes:
         pass
         
-def getAverageLikes(fComments,fPosts):   
+def getAverageLikes(fComments,fPosts,fbName):   
     plt.figure()
     dfComments = pd.read_csv(fComments,encoding="latin-1")
     #print(dfComments['comment_published'])
@@ -70,7 +70,7 @@ def getAverageLikes(fComments,fPosts):
     plt.scatter(rangeComments,listAverage,s=2,color="green")
     plt.xlabel("top commententators from most to least comments")
     plt.ylabel("number of likes per comment (average)")
-    plt.title("Top commentators  vs average likes per comment\n")
+    plt.title("Top commentators  vs average likes per comment for "+fbName + " \n")
     plt.ylim(ymin=0)
     plt.xlim((0,500))
     plt.savefig("static\\averageComments.png")
