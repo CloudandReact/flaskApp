@@ -95,15 +95,15 @@ def fileAnalysis():
 			print(type(file_contents))
 			if option=="Comments by hour of the day":
 				print("in top comments of hour of the day")
-				groupByHour.saveHourGraph("statsFile.csv")
+				groupByHour.saveHourGraph("statsFile.csv",fName)
 				return render_template("graph.html",figName=("commentsByHour.png"),title="Comments per hour of the day")
 			elif option=="Top Commentators":
-				topComments.makeTopCommentsGraph("statsFile.csv")
+				topComments.makeTopCommentsGraph("statsFile.csv",fName)
 				return render_template("graph.html",figName=("topCommentators.png"),title="top 100 commentators and the number of comments over a period of time")
 			elif option=="General Statistics":
 				dfComments = pd.read_csv("statsFile.csv", parse_dates=['comment_published'],encoding="latin-1")
 				print("hello world statistics")
-				return render_template("generalStats.html",dFrame=dfComments.describe(percentiles=[0.25,0.5,0.75,0.85,0.9,0.95,0.97,0.98,0.99]).to_html(classes="table table-striped"),title="General statistics on the file including mean ,standard deviation and percentiles of count of comment")
+				return render_template("generalStats.html",dFrame=dfComments.describe(percentiles=[0.25,0.5,0.75,0.85,0.9,0.95,0.97,0.98,0.99]).to_html(classes="table table-striped"),title="General statistics on the file for " + fName + " including mean ,standard deviation and percentiles of count of comment")
 		elif option=="Average likes for top commentators":
 			print("in average likes for top commentators need 2 files")
 			postsFile = request.files['fileUploadLikes']

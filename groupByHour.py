@@ -5,7 +5,7 @@ Created on Nov 12, 2016
 '''
 import pandas as pd
 import matplotlib.pyplot  as plt
-def saveHourGraph(fName):
+def saveHourGraph(fName,fbName):
     plt.figure()
     dfComments = pd.read_csv(fName, parse_dates=['comment_published'],encoding="latin-1")
     print(dfComments.dtypes)
@@ -20,7 +20,7 @@ def saveHourGraph(fName):
     #plt.legend().remove()
     dfBriefLikes.groupby('comment_published').agg(['sum']).plot()
     plt.legend().remove()
-    plt.title("comments per hour of the day")
+    plt.title("comments per hour of the day of " + fbName + " \n")
     plt.xlabel("comment published per hour of the day")
     plt.ylabel("comments")
     print("saving file")

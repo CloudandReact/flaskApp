@@ -14,7 +14,7 @@ def uprint(*objects, sep=' ', end='\n', file=sys.stdout):
     else:
         f = lambda obj: str(obj).encode(enc, errors='backslashreplace').decode(enc)
         print(*map(f, objects), sep=sep, end=end, file=file)
-def makeTopCommentsGraph(fName):   
+def makeTopCommentsGraph(fName,fbName):   
     plt.figure()     
     dfStatus = pd.read_csv(fName,parse_dates=['comment_published'])
     print(dfStatus.describe())
@@ -32,7 +32,7 @@ def makeTopCommentsGraph(fName):
     uprint(dfJustComments.index)
     print(type(dfJustComments))
     plt.scatter(gRange,dfJustComments['count'],color='red')
-    plt.title("Users who comment the most and their number of comments\n")
+    plt.title("Users who comment the most and their number of comments " + fbName + "\n")
     plt.xlabel("top users")
     plt.ylabel("number of comments")
     plt.ylim(ymin=0)
