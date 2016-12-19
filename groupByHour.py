@@ -6,6 +6,7 @@ Created on Nov 12, 2016
 import pandas as pd
 import matplotlib.pyplot  as plt
 def saveHourGraph(fName):
+    plt.figure()
     dfComments = pd.read_csv(fName, parse_dates=['comment_published'],encoding="latin-1")
     print(dfComments.dtypes)
     dfBrief = dfComments[['comment_id', 'comment_published']]
@@ -24,5 +25,6 @@ def saveHourGraph(fName):
     plt.ylabel("comments")
     print("saving file")
     plt.savefig('static\commentsByHour.png')
+
     
 

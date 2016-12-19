@@ -14,7 +14,8 @@ def uprint(*objects, sep=' ', end='\n', file=sys.stdout):
     else:
         f = lambda obj: str(obj).encode(enc, errors='backslashreplace').decode(enc)
         print(*map(f, objects), sep=sep, end=end, file=file)
-def makeTopCommentsGraph(fName):        
+def makeTopCommentsGraph(fName):   
+    plt.figure()     
     dfStatus = pd.read_csv(fName,parse_dates=['comment_published'])
     print(dfStatus.describe())
     print("head")
@@ -39,6 +40,7 @@ def makeTopCommentsGraph(fName):
     
     #plt.xticks( dfJustComments['comment_author'].iloc[0:4], rotation='vertical')
     print("right before save file")
-    plt.savefig('static\\topComments.png')
+    plt.savefig('static\\topCommentators.png')
     print("did we save file")
+
     

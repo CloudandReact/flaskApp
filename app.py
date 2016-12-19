@@ -2,6 +2,7 @@ from flask import Flask, render_template,request,url_for,send_from_directory
 from textblob import TextBlob
 from textblob.sentiments import NaiveBayesAnalyzer
 from textblob import Blobber
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import os
 import sentimeAnalysis
 import groupByHour
@@ -18,8 +19,10 @@ def homepage():
 @app.route('/home')
 def homeP():
 	return render_template("home.html")
+
 blobBaiyes =Blobber(analyzer=NaiveBayesAnalyzer())
 blobPattern = Blobber()
+analyzer = SentimentIntensityAnalyzer()
 @app.route('/createClassifier',methods=['post','get'])
 def createClassifer():
 	if (request.method=='POST'):
@@ -50,9 +53,11 @@ def SentimentAnalysis():
 		if txtQuery!="":
 			textblobBaiyes = blobBaiyes(txtQuery)
 			textblobPattern = blobPattern(txtQuery)
+			vaderPolarity = analyzer.polarity_scores(txtQuery)  
 			sentiments ={}
 			sentiments["textblobBaiyes 0 neg 1 pos"] = [textblobBaiyes.sentiment.p_pos,'-']
 			sentiments['textbloPattern -1 to 1'] = [textblobPattern.sentiment.polarity,textblobPattern.subjectivity]
+			sentiments['vaderSentiment -1  to 1']= [vaderPolarity['compound'],'-']
 			return render_template("SentimentProcessed.html",posts=sentiments,txt=txtQuery)
 	"""
 	if(request.method=='POST'):
@@ -73,6 +78,7 @@ def fileAnalysis():
 	if request.method=="POST":
 		option = request.form['graphSelection']
 		f =request.files['fileUpload']
+		currentDir = os.getcwd()
 		
 		if not f:
 			print("not file entered")
@@ -87,10 +93,10 @@ def fileAnalysis():
 			if option=="Comments by hour of the day":
 				print("in top comments of hour of the day")
 				groupByHour.saveHourGraph("statsFile.csv")
-				return render_template("graph.html",figName="commentsByHour.png",title="Comments per hour of the day")
+				return render_template("graph.html",figName=("commentsByHour.png"),title="Comments per hour of the day")
 			elif option=="Top Commentators":
 				topComments.makeTopCommentsGraph("statsFile.csv")
-				return render_template("graph.html",figName="topComments.png",title="top 100 commentators and the number of comments over a period of time")
+				return render_template("graph.html",figName=("topCommentators.png"),title="top 100 commentators and the number of comments over a period of time")
 			elif option=="General Statistics":
 				dfComments = pd.read_csv("statsFile.csv", parse_dates=['comment_published'],encoding="latin-1")
 				print("hello world statistics")
@@ -113,7 +119,7 @@ def fileAnalysis():
 
 				print("wrote to both files")
 				averageComments.getAverageLikes("statsFile.csv","postsFile.csv")
-				return render_template("graph.html",figName="aComments.png",title="Average Comments for top 500 users")
+				return render_template("graph.html",figName=("averageComments.png"),title="Average Comments for top 500 users")
 
 		
 		print(option)

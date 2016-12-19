@@ -21,6 +21,7 @@ def getTopLikes(topLikes):
         pass
         
 def getAverageLikes(fComments,fPosts):   
+    plt.figure()
     dfComments = pd.read_csv(fComments,encoding="latin-1")
     #print(dfComments['comment_published'])
     print("df comments length", len(dfComments.index))
@@ -72,6 +73,7 @@ def getAverageLikes(fComments,fPosts):
     plt.title("Top commentators  vs average likes per comment\n")
     plt.ylim(ymin=0)
     plt.xlim((0,500))
-    plt.savefig("static\\aComments.png")
+    plt.savefig("static\\averageComments.png")
+
    
     
