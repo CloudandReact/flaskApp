@@ -8,6 +8,7 @@ import sentimeAnalysis
 import groupByHour
 import topComments
 import averageComments
+import finalClassifier
 import pandas as pd
 
 app = Flask(__name__)
@@ -41,6 +42,11 @@ def createClassifer():
 			newFile= open("trainingSetNeg.txt","w+",encoding='utf-8')
 			newFile.write(file_contentsNeg)
 			newFile.close()
+			finalClassifier.makeClassifier(file_contentsPos,file_contentsNeg)
+			finalClassifier.zipFiles()
+			return send_from_directory(os.getcwd(), "classifiers.zip",as_attachment=True)
+			
+
 		
 
 
