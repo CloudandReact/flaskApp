@@ -16,7 +16,7 @@ def uprint(*objects, sep=' ', end='\n', file=sys.stdout):
     else:
         f = lambda obj: str(obj).encode(enc, errors='backslashreplace').decode(enc)
         print(*map(f, objects), sep=sep, end=end, file=file)
-def parseFile(fName,levelSentiment):
+def parseFile(fName,levelSentiment,fNameWrite):
     dfComments = pd.read_csv(fName,encoding="latin-1")  # ParseDatesTests
     commentPolarity = []
     commentSubjectivity = []
@@ -57,27 +57,27 @@ def parseFile(fName,levelSentiment):
         dfCons = dfCons[dfCons['comment_pos'] <0.37]
         dfCons = dfCons[dfCons['comment_compound']<-0.3]
         uprint(dfCons.to_string())
-        dfCons.to_csv("somewhatCons.csv",index=False,encoding="latin-1")
+        dfCons.to_csv(fNameWrite,index=False,encoding="latin-1")
         print("writing somewhat negative file")
     elif levelSentiment == "Very Negative":
         dfCons = dfComments[dfComments['comment_polarity'] <-0.7]
         dfCons = dfCons[dfCons['comment_pos'] <0.25]
         dfCons = dfCons[dfCons['comment_compound']<-0.5]
         uprint(dfCons.to_string())
-        dfCons.to_csv("veryCons.csv", index=False,encoding="latin-1")
+        dfCons.to_csv(fNameWrite, index=False,encoding="latin-1")
         print("writing to very negative file")        
     elif levelSentiment== "Somewhat Positive":
         dfPros= dfComments[dfComments['comment_polarity']>0.45]
         dfPros= dfPros[dfPros['comment_pos']>0.63]
         dfPros = dfPros[dfPros['comment_compound']>0.3]
         uprint(dfPros.to_string())
-        dfPros.to_csv("somewhatPros.csv",index=False,encoding="latin-1")
+        dfPros.to_csv(fNameWrite,index=False,encoding="latin-1")
     elif levelSentiment=="Very Positive":
         dfPros= dfComments[dfComments['comment_polarity']>0.7]
         dfPros= dfPros[dfPros['comment_pos']>0.75]
         dfPros = dfPros[dfPros['comment_compound']>0.5]
         uprint(dfPros.to_string())
-        dfPros.to_csv("veryPros.csv",index=False,encoding="latin-1")
+        dfPros.to_csv(fNameWrite,index=False,encoding="latin-1")
     else:
         print("wrong positivity type not writing to a file please enter one of the 4 from the form")
         

@@ -146,7 +146,9 @@ def renderFigure(figName):
 def fileSentiment():
 
 	if request.method=="POST":
-		dictFileMapping={"Somewhat Negative":"somewhatCons.csv","Very Negative":"veryCons.csv", "Somewhat Positive":"somewhatPros.csv","Very Positive":"veryPros.csv"}
+		fName = request.files['fileUpload'].filename
+		fName = fName[:fName.find("_")]
+		dictFileMapping={"Somewhat Negative":("somewhatCons"+fName+"_.csv"),"Very Negative":("veryCons"+fName+"_.csv"), "Somewhat Positive":("somewhatPros"+fName+"_.csv"),"Very Positive":("veryPros"+fName+"_.csv")}
 		print("made a post request yeah")
 		option = request.form['graphSelection']
 		#fName = request.form['fileUpload']
@@ -166,7 +168,7 @@ def fileSentiment():
 		print(option,f)
 		print("posted file ")
 		print(os.getcwd())
-		sentimeAnalysis.parseFile("newFile.csv",option)
+		sentimeAnalysis.parseFile("newFile.csv",option,dictFileMapping[option])
 		#fName = 
 		return send_from_directory(os.getcwd(), dictFileMapping[option],as_attachment=True)
 	return render_template("fileSentiment.html")
