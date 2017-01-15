@@ -22,10 +22,10 @@ def getTopLikes(topLikes):
         
 def getAverageLikes(fComments,fPosts,fbName):   
     plt.figure()
-    dfComments = pd.read_csv(fComments,encoding="latin-1")
+    dfComments = pd.read_csv(fComments,encoding="latin-1",skipfooter=1)
     #print(dfComments['comment_published'])
     print("df comments length", len(dfComments.index))
-    dfStatus = pd.read_csv(fPosts,encoding="UTF-8")
+    dfStatus = pd.read_csv(fPosts,encoding="UTF-8",skipfooter=1)
     print(dfStatus['status_published'])
     print("df status length", len(dfStatus.index))
     dfMerged = pd.merge(dfComments, dfStatus, on='status_id')

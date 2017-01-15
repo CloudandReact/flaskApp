@@ -16,7 +16,7 @@ def uprint(*objects, sep=' ', end='\n', file=sys.stdout):
         print(*map(f, objects), sep=sep, end=end, file=file)
 def makeTopCommentsGraph(fName,fbName):   
     plt.figure()     
-    dfStatus = pd.read_csv(fName,parse_dates=['comment_published'])
+    dfStatus = pd.read_csv(fName,parse_dates=['comment_published'],skipfooter=1)
     print(dfStatus.describe())
     print("head")
     uprint(dfStatus.head())

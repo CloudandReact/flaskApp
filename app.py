@@ -61,7 +61,7 @@ def SentimentAnalysis():
 			textblobPattern = blobPattern(txtQuery)
 			vaderPolarity = analyzer.polarity_scores(txtQuery)  
 			sentiments ={}
-			sentiments["textblobBaiyes 0 neg 1 pos"] = [textblobBaiyes.sentiment.p_pos,'-']
+			sentiments["textblobBaiyes -1 to 1"] = [(textblobBaiyes.sentiment.p_pos-.5)*2,'-']
 			sentiments['textbloPattern -1 to 1'] = [textblobPattern.sentiment.polarity,textblobPattern.subjectivity]
 			sentiments['vaderSentiment -1  to 1']= [vaderPolarity['compound'],'-']
 			return render_template("SentimentProcessed.html",posts=sentiments,txt=txtQuery)
