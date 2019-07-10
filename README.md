@@ -2,6 +2,8 @@
 
 Comp 490 Project on Sentiment Analysis
 
+Link to research paper https://drive.google.com/drive/folders/0B6MFLleQhxNlaHlxWkdoUkpubkE
+
 To Run the web app
 1.	Install python 3.5
 
